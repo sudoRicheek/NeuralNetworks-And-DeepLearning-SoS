@@ -1,2 +1,4 @@
-# NeuralNetworks-And-DeepLearning-SoS
-This repo will house the notes/related-implementations on NN and DL that I will cover throughout the summer break of 2020.
+# Neural Networks And Deep Learning
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+This is a reading project, that I have taken up in my summer break of 2020 as a part of the Summer Of Science IIT Bombay. 
