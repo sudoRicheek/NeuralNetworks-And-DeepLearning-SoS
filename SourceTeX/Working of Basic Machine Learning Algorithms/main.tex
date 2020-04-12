@@ -1,0 +1,1243 @@
+\documentclass[11pt, a4paper]{book}
+
+    \usepackage[breakable]{tcolorbox}
+    \usepackage{parskip} % Stop auto-indenting (to mimic markdown behaviour)
+    \usepackage[margin=1in]{geometry}
+    \usepackage{iftex}
+    \ifPDFTeX
+    	\usepackage[T1]{fontenc}
+    	\usepackage{mathpazo}
+    \else
+    	\usepackage{fontspec}
+    \fi
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % Maintain compatibility with old templates. Remove in nbconvert 6.0
+    \let\Oldincludegraphics\includegraphics
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionFormat{nocaption}{}
+    \captionsetup{format=nocaption,aboveskip=0pt,belowskip=0pt}
+
+    \usepackage[Export]{adjustbox} % Used to constrain images to a maximum size
+    \adjustboxset{max size={0.9\linewidth}{0.9\paperheight}}
+    \usepackage{float}
+    \floatplacement{figure}{H} % forces figures to be placed at the correct location
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range
+    \makeatletter % fix for grffile with XeLaTeX
+    \def\Gread@@xetex#1{%
+      \IfFileExists{"\Gin@base".bb}%
+      {\Gread@eps{\Gin@base.bb}}%
+      {\Gread@@xetex@aux#1}%
+    }
+    \makeatother
+
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    % The default LaTeX title has an obnoxious amount of whitespace. By default,
+    % titling removes some of it. It also provides customization options.
+    \usepackage{titling}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    \usepackage{mathrsfs}
+    
+
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+    \definecolor{ansi-default-inverse-fg}{HTML}{FFFFFF}
+    \definecolor{ansi-default-inverse-bg}{HTML}{000000}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatibility definitions
+    \def\gt{>}
+    \def\lt{<}
+    \let\Oldtex\TeX
+    \let\Oldlatex\LaTeX
+    \renewcommand{\TeX}{\textrm{\Oldtex}}
+    \renewcommand{\LaTeX}{\textrm{\Oldlatex}}
+    % Document parameters
+    % Document title
+    \title{Working of Basic Machine Learning Algorithms}
+    
+    \author{Richeek Das}
+    
+    
+    
+% Pygments definitions
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % For linebreaks inside Verbatim environment from package fancyvrb. 
+    \makeatletter
+        \newbox\Wrappedcontinuationbox 
+        \newbox\Wrappedvisiblespacebox 
+        \newcommand*\Wrappedvisiblespace {\textcolor{red}{\textvisiblespace}} 
+        \newcommand*\Wrappedcontinuationsymbol {\textcolor{red}{\llap{\tiny$\m@th\hookrightarrow$}}} 
+        \newcommand*\Wrappedcontinuationindent {3ex } 
+        \newcommand*\Wrappedafterbreak {\kern\Wrappedcontinuationindent\copy\Wrappedcontinuationbox} 
+        % Take advantage of the already applied Pygments mark-up to insert 
+        % potential linebreaks for TeX processing. 
+        %        {, <, #, %, $, ' and ": go to next line. 
+        %        _, }, ^, &, >, - and ~: stay at end of broken line. 
+        % Use of \textquotesingle for straight quote. 
+        \newcommand*\Wrappedbreaksatspecials {% 
+            \def\PYGZus{\discretionary{\char`\_}{\Wrappedafterbreak}{\char`\_}}% 
+            \def\PYGZob{\discretionary{}{\Wrappedafterbreak\char`\{}{\char`\{}}% 
+            \def\PYGZcb{\discretionary{\char`\}}{\Wrappedafterbreak}{\char`\}}}% 
+            \def\PYGZca{\discretionary{\char`\^}{\Wrappedafterbreak}{\char`\^}}% 
+            \def\PYGZam{\discretionary{\char`\&}{\Wrappedafterbreak}{\char`\&}}% 
+            \def\PYGZlt{\discretionary{}{\Wrappedafterbreak\char`\<}{\char`\<}}% 
+            \def\PYGZgt{\discretionary{\char`\>}{\Wrappedafterbreak}{\char`\>}}% 
+            \def\PYGZsh{\discretionary{}{\Wrappedafterbreak\char`\#}{\char`\#}}% 
+            \def\PYGZpc{\discretionary{}{\Wrappedafterbreak\char`\%}{\char`\%}}% 
+            \def\PYGZdl{\discretionary{}{\Wrappedafterbreak\char`\$}{\char`\$}}% 
+            \def\PYGZhy{\discretionary{\char`\-}{\Wrappedafterbreak}{\char`\-}}% 
+            \def\PYGZsq{\discretionary{}{\Wrappedafterbreak\textquotesingle}{\textquotesingle}}% 
+            \def\PYGZdq{\discretionary{}{\Wrappedafterbreak\char`\"}{\char`\"}}% 
+            \def\PYGZti{\discretionary{\char`\~}{\Wrappedafterbreak}{\char`\~}}% 
+        } 
+        % Some characters . , ; ? ! / are not pygmentized. 
+        % This macro makes them "active" and they will insert potential linebreaks 
+        \newcommand*\Wrappedbreaksatpunct {% 
+            \lccode`\~`\.\lowercase{\def~}{\discretionary{\hbox{\char`\.}}{\Wrappedafterbreak}{\hbox{\char`\.}}}% 
+            \lccode`\~`\,\lowercase{\def~}{\discretionary{\hbox{\char`\,}}{\Wrappedafterbreak}{\hbox{\char`\,}}}% 
+            \lccode`\~`\;\lowercase{\def~}{\discretionary{\hbox{\char`\;}}{\Wrappedafterbreak}{\hbox{\char`\;}}}% 
+            \lccode`\~`\:\lowercase{\def~}{\discretionary{\hbox{\char`\:}}{\Wrappedafterbreak}{\hbox{\char`\:}}}% 
+            \lccode`\~`\?\lowercase{\def~}{\discretionary{\hbox{\char`\?}}{\Wrappedafterbreak}{\hbox{\char`\?}}}% 
+            \lccode`\~`\!\lowercase{\def~}{\discretionary{\hbox{\char`\!}}{\Wrappedafterbreak}{\hbox{\char`\!}}}% 
+            \lccode`\~`\/\lowercase{\def~}{\discretionary{\hbox{\char`\/}}{\Wrappedafterbreak}{\hbox{\char`\/}}}% 
+            \catcode`\.\active
+            \catcode`\,\active 
+            \catcode`\;\active
+            \catcode`\:\active
+            \catcode`\?\active
+            \catcode`\!\active
+            \catcode`\/\active 
+            \lccode`\~`\~ 	
+        }
+    \makeatother
+
+    \let\OriginalVerbatim=\Verbatim
+    \makeatletter
+    \renewcommand{\Verbatim}[1][1]{%
+        %\parskip\z@skip
+        \sbox\Wrappedcontinuationbox {\Wrappedcontinuationsymbol}%
+        \sbox\Wrappedvisiblespacebox {\FV@SetupFont\Wrappedvisiblespace}%
+        \def\FancyVerbFormatLine ##1{\hsize\linewidth
+            \vtop{\raggedright\hyphenpenalty\z@\exhyphenpenalty\z@
+                \doublehyphendemerits\z@\finalhyphendemerits\z@
+                \strut ##1\strut}%
+        }%
+        % If the linebreak is at a space, the latter will be displayed as visible
+        % space at end of first line, and a continuation symbol starts next line.
+        % Stretch/shrink are however usually zero for typewriter font.
+        \def\FV@Space {%
+            \nobreak\hskip\z@ plus\fontdimen3\font minus\fontdimen4\font
+            \discretionary{\copy\Wrappedvisiblespacebox}{\Wrappedafterbreak}
+            {\kern\fontdimen2\font}%
+        }%
+        
+        % Allow breaks at special characters using \PYG... macros.
+        \Wrappedbreaksatspecials
+        % Breaks at punctuation characters . , ; ? ! and / need catcode=\active 	
+        \OriginalVerbatim[#1,codes*=\Wrappedbreaksatpunct]%
+    }
+    \makeatother
+
+    % Exact colors from NB
+    \definecolor{incolor}{HTML}{303F9F}
+    \definecolor{outcolor}{HTML}{D84315}
+    \definecolor{cellborder}{HTML}{CFCFCF}
+    \definecolor{cellbackground}{HTML}{F7F7F7}
+    
+    % prompt
+    \makeatletter
+    \newcommand{\boxspacing}{\kern\kvtcb@left@rule\kern\kvtcb@boxsep}
+    \makeatother
+    \newcommand{\prompt}[4]{
+        \ttfamily\llap{{\color{#2}[#3]:\hspace{3pt}#4}}\vspace{-\baselineskip}
+    }
+    
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+\begin{document}
+    \setlength{\abovedisplayskip}{3pt}
+    \setlength{\belowdisplayskip}{3pt}
+    \maketitle
+    
+\chapter{Working of Basic Machine Learning Algorithms}
+
+    
+    \(\large\textbf{Things we will look at here :}\)
+
+\begin{itemize}
+\item
+  \textbf{Linear Regression}
+\item
+  \textbf{Gradient Descent}
+\item
+  \textbf{Polynomial Regression}
+\item
+  \textbf{Learning Curves}
+\item
+  \textbf{Regularized Linear Models}
+\item
+  \textbf{Logistic Regression}
+\end{itemize}
+
+    \hypertarget{linear-regression}{%
+\section{Linear Regression}\label{linear-regression}}
+
+A linear model makes a prediction by simply computing a weighted
+\textbf{sum} of the \textbf{input features}, plus a constant called the
+bias term (also called the \textbf{intercept term})
+
+\textbf{\emph{Linear Regression}} model prediction :
+
+\[\hat{y} = \theta_{0} + \theta_{1}x_{1} + \theta_{2}x_{2} + \dotsm + \theta_{n}x_{n}\]
+
+Here :
+
+\begin{itemize}
+\item
+  \(\hat{y}\) is the predicted value
+\item
+  \(n\) is the number of features
+\item
+  \(x_{i}\) is the \(i^{th}\) feature value
+\item
+  \(\theta_{j}\) is the \(j^{th}\) model parameter, i.e the feature
+  weights.
+\end{itemize}
+
+It can be further elegantly written as :
+
+\[\hat{y} = h_{\theta}(\textbf{x}) = \theta^{\intercal}\cdot\textbf{x}\]
+
+Here :
+
+\begin{itemize}
+\item
+  \(\theta\) is the model's \emph{parameter column vector} containing
+  the bias term \(\theta_{0}\) and the feature weights.
+\item
+  \(\textbf{x}\) is the instance's \emph{feature vector} containing
+  \(x_{0}\) to \(x_{n}\), with \(x_{0}\) always equal to 1
+\item
+  Needless to say the \(\theta\cdot\textbf{x}\) is the usual dot product
+\item
+  \(h_{\theta}\) is the hypothesis function, using the model parameters
+  \(\theta\)
+\end{itemize}
+
+\textbf{So, let's come to the algorithms handling the training part of
+Linear Regression}
+
+The most common performance measure of a regression model is the
+\textbf{Root Mean Square Error (RMSE)}. Therefore, to train a
+\textbf{Linear Regression} model, we need to find the value of
+\(\theta\) that minimizes the \textbf{RMSE}. It is simpler to minimize
+the \textbf{mean squared error (MSE)} than the \textbf{RMSE}, and it
+leads to the same result.
+
+The \textbf{MSE} of a \textbf{LR} hypothesis \(h_{\theta}\) on a
+training set \(\mathbf{X}\) is calculated using :
+
+\[\mathbf{MSE(X},h_{\theta}) = \frac{1}{m}\sum_{i=1}^{m} \Bigg( \theta^{\intercal}\mathbf{x}^{(i)} - y^{(i)} \Bigg)^2\]
+
+This function mentioned above is called the \textbf{cost function} for a
+\textbf{Linear Regression model}
+
+To find the value of \(\theta\) that minimizes the cost function, there
+is a mathematical tool that gives the result directly. Its called the
+\emph{Normal Equation}
+
+\hypertarget{the-normal-equation}{%
+\subsection{The Normal Equation}\label{the-normal-equation}}
+
+\[\hat{\theta} = \Big( \mathbf{X^{\intercal}X} \Big)^{-1} \mathbf{X^{\intercal}}\textbf{y}\]
+
+Here :
+
+\begin{itemize}
+\item
+  \(\hat{\theta}\) is the value of \(\theta\) that minimizes the cost
+  function.
+\item
+  \(\mathbf{y}\) is the vector of target values containing \(y^{(1)}\)
+  to \(y^{(m)}\).
+\end{itemize}
+
+Let's test this normal equation with some code !
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{1}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+
+\PY{n}{X} \PY{o}{=} \PY{l+m+mi}{2} \PY{o}{*} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{rand}\PY{p}{(}\PY{l+m+mi}{100}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}
+\PY{n}{y} \PY{o}{=} \PY{l+m+mi}{5} \PY{o}{+} \PY{l+m+mi}{7} \PY{o}{*} \PY{n}{X} \PY{o}{+} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{randn}\PY{p}{(}\PY{l+m+mi}{100}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}
+\PY{c+c1}{\PYZsh{}\PYZsh{} Generates a random linear dataset with some Gaussian Noise}
+\end{Verbatim}
+\end{tcolorbox}
+
+    Let's plot it :
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{2}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
+
+\PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{X}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{ bo}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{markersize} \PY{o}{=} \PY{l+m+mi}{3}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{xlim}\PY{p}{(}\PY{l+m+mf}{0.00}\PY{p}{,} \PY{l+m+mf}{2.00}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{grid}\PY{p}{(}\PY{k+kc}{True}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{X}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{y}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Random Linear Dataset}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_4_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    We will use the \texttt{inv()} function from \emph{NumPy}'s linear
+algebra module (\texttt{np.linalg}) to compute the inverse of a matrix,
+and the \texttt{dot()} method for matrix multiplication :
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{3}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{X\PYZus{}b} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{c\PYZus{}}\PY{p}{[}\PY{n}{np}\PY{o}{.}\PY{n}{ones}\PY{p}{(}\PY{p}{(}\PY{l+m+mi}{100}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}\PY{p}{,} \PY{n}{X}\PY{p}{]} \PY{c+c1}{\PYZsh{} add x0 = 1 to each instance}
+\PY{n}{theta\PYZus{}best} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{linalg}\PY{o}{.}\PY{n}{inv}\PY{p}{(}\PY{n}{X\PYZus{}b}\PY{o}{.}\PY{n}{T}\PY{o}{.}\PY{n}{dot}\PY{p}{(}\PY{n}{X\PYZus{}b}\PY{p}{)}\PY{p}{)}\PY{o}{.}\PY{n}{dot}\PY{p}{(}\PY{n}{X\PYZus{}b}\PY{o}{.}\PY{n}{T}\PY{p}{)}\PY{o}{.}\PY{n}{dot}\PY{p}{(}\PY{n}{y}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    Function intended for : \(y = 5 + 7x\)
+
+Expression found :
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{4}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n+nb}{print}\PY{p}{(}\PY{n}{theta\PYZus{}best}\PY{p}{[}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{]}\PY{p}{)} \PY{c+c1}{\PYZsh{}\PYZsh{} Intercept term}
+\PY{n+nb}{print}\PY{p}{(}\PY{n}{theta\PYZus{}best}\PY{p}{[}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{]}\PY{p}{)} \PY{c+c1}{\PYZsh{}\PYZsh{} First weight term}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+[[4.80833324]]
+[[7.12658528]]
+    \end{Verbatim}
+
+    Now, let's get the predicted linear function using the \(\hat{\theta}\)
+found using normal equations :
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{5}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{X\PYZus{}new} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{]}\PY{p}{)}
+\PY{n}{X\PYZus{}new\PYZus{}b} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{c\PYZus{}}\PY{p}{[}\PY{n}{np}\PY{o}{.}\PY{n}{ones}\PY{p}{(}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}\PY{p}{,} \PY{n}{X\PYZus{}new}\PY{p}{]}
+\PY{n}{y\PYZus{}predict} \PY{o}{=} \PY{n}{X\PYZus{}new\PYZus{}b}\PY{o}{.}\PY{n}{dot}\PY{p}{(}\PY{n}{theta\PYZus{}best}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    Let's plot the prediction :
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{6}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{X}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{ bo}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{markersize} \PY{o}{=} \PY{l+m+mi}{3}\PY{p}{,} \PY{n}{label} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Scattered Dataset}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{xlim}\PY{p}{(}\PY{l+m+mf}{0.00}\PY{p}{,} \PY{l+m+mf}{2.00}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{grid}\PY{p}{(}\PY{k+kc}{True}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{X}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{y}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{X\PYZus{}new}\PY{p}{,} \PY{n}{y\PYZus{}predict}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{r\PYZhy{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{label} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Predicted}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{n}{loc} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{lower right}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_12_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    In \emph{NumPy} we usually calculate \(\hat{\theta}\) using :
+\[\hat{\theta} = \mathbf{X}^{+}y\]
+
+where, \(\mathbf{X}^{+}\) is the \textbf{pseudoinverse} of
+\(\mathbf{X}\), aka the \textbf{Moore-Penrose inverse}. The
+pseudoinverse is calculated using a standard matrix factorization
+technique called \emph{Singular Value Decomposition(SVD)} \textgreater{}
+Can be found in the mathematical preliminary \href{www.github.com}{part}
+
+This approach is \textbf{more efficient} than computing the \emph{Normal
+Equation}, plus it also handles the edge cases. The \emph{Normal
+Equation} may not work if the matrix \(\mathbf{X^{\intercal}X}\) is not
+invertible, such as if its not a square matrix or if some features are
+redundant, but the pseudoinverse is always defined.
+
+\textbf{REMEMBER TO PUT THE LINK HERE}
+
+    \hypertarget{computational-complexity}{%
+\subsection{Computational
+Complexity}\label{computational-complexity}}
+
+The \textbf{Normal Equation} computes the inverse of
+\(\mathbf{X^{\intercal}X}\), which is an \((n + 1) \times (n + 1)\) matrix
+(where \(n\) is the number of features). The computational complexity of
+inverting such a matrix is typically about \(O(n^3)\), depending on the
+implementation.
+
+The \textbf{SVD} approach has \(O(n^2)\). Both these approaches are
+linear with regard to the number of instances in the training set (they
+are \(O(m)\)), so they handle large training sets efficiently.
+
+    \hypertarget{gradient-descent}{%
+\section{Gradient Descent}\label{gradient-descent}}
+
+\emph{Gradient Descent} is a generic optimization algorithm capable of
+finding optimal solutions to a wide range of problems.
+
+    \begin{center}
+    \adjustimage{max size={0.7\linewidth}{0.9\paperheight}}{download1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+
+Here, we start by filling \(\theta\) with random values (\emph{random
+initialization}). Then we improve it gradually, taking one \(d\theta\)
+step at a time, each step making an attempt to reduce the cost function
+till it converges to a minimum.
+
+\emph{Learning Rate hyperparameter} : It speaks about the size of the
+steps taken. if learning rate is too small then the algorithm will make
+a huge amount of iterations to converge(in-efficient). On the other
+hand, if its too high, then it might even make the algorithm diverge,
+and fail to reach a good solution.
+
+Well, one problem that arises at once, is the fact that there can be
+multiple local minimas, thus making it difficult to find the global
+minima with \emph{random initialization} plan, we previously had.
+
+Fortunately, the \textbf{MSE cost function} for a \textbf{Linear
+Regression} model happens to be a convex function (we can easily verify
+it) ! This implies that there are no local minima, just one global
+minimum. It is also a continuous function with a slope that never
+changes abruptly. These two facts have a great consequence:
+\textbf{Gradient Descent} is guaranteed to approach arbitrarily close
+the global minimum(well, but excluding other factors).
+
+When using Gradient Descent, we should ensure that all features have a
+similar scale (e.g in \textbf{Python}, using
+\texttt{Scikit-Learn\ StandardScaler} class)(there are other scalers as
+well, which suit to different occasions), or else it will take much
+longer to converge.
+
+    \hypertarget{batch-gradient-descent}{%
+\subsection{Batch Gradient Descent}\label{batch-gradient-descent}}
+
+To implement \emph{GD} we nee dto compute the gradient of the \emph{cost
+function} with regard to each model parameter \(\theta_{j}\). Therefore,
+we need to calculate the \emph{partial derivative} with respect to
+\(\theta_{j}\). The equation looks something like this :
+
+\[\frac{\partial}{\partial \theta_{j}}\mathbf{MSE}\Big( \theta \Big) = \frac{2}{m} \sum_{i=1}^{m} \Bigg( \theta^{\intercal}\mathbf{x}^{(i)} - y^{(i)} \Bigg)x_{j}^{(i)}\]
+
+Gradient vector of the cost function :
+
+\[\nabla_{\theta} \mathbf{MSE}\Big( \theta \Big) = \begin{pmatrix} \frac{\partial}{\partial \theta_{0}}\mathbf{MSE}\Big( \theta \Big)\\ \frac{\partial}{\partial \theta_{1}}\mathbf{MSE}\Big( \theta \Big)\\ \vdots \\ \frac{\partial}{\partial \theta_{n}}\mathbf{MSE}\Big( \theta \Big) \end{pmatrix} = \frac{2}{m} \mathbf{X}^{\intercal}\Big( \mathbf{X}\theta - y \Big)\]
+
+The only problem(or benefit, as you see it) of this algorithm is that it
+involves calculations over the full training set \(\mathbf{X}\) at each
+step of \emph{Gradient Descent}. That is why it is called the
+\emph{Batch/Full Gradient Descent}. This makes this algorithm terribly
+slow but kind of accurate.
+
+\textbf{However}, Gradient Descent scales well with the number of
+features. Training a \emph{Linear Regression} model when there are a lot
+of features is much faster using \emph{Gradient Descent} than using the
+\emph{Normal Equation} or \emph{SVD decomposition} :)
+
+Finding the gradient, gives us the uphill direction, so quote trivially,
+the \emph{Gradient Descent Step} looks like this :
+
+\[\theta^{(next)} = \theta - \eta\nabla_{\theta} \mathbf{MSE}\Big( \theta \Big)\]
+
+Here, \(\eta\) is the learning rate of the model.
+
+Now let's try the same example we used with \emph{Normal Equation} :
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{7}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{learning\PYZus{}rate} \PY{o}{=} \PY{l+m+mf}{0.1}
+\PY{n}{n\PYZus{}iterations} \PY{o}{=} \PY{l+m+mi}{1000}
+\PY{n}{m} \PY{o}{=} \PY{l+m+mi}{100}
+
+\PY{n}{theta} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{randn}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)} \PY{c+c1}{\PYZsh{}Random initialization to start with}
+
+\PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{n\PYZus{}iterations}\PY{p}{)}\PY{p}{:}
+    \PY{n}{gradients} \PY{o}{=} \PY{l+m+mi}{2}\PY{o}{/}\PY{n}{m} \PY{o}{*} \PY{n}{X\PYZus{}b}\PY{o}{.}\PY{n}{T}\PY{o}{.}\PY{n}{dot}\PY{p}{(}\PY{n}{X\PYZus{}b}\PY{o}{.}\PY{n}{dot}\PY{p}{(}\PY{n}{theta}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{n}{y}\PY{p}{)}
+    \PY{n}{theta} \PY{o}{=} \PY{n}{theta} \PY{o}{\PYZhy{}} \PY{n}{learning\PYZus{}rate}\PY{o}{*}\PY{n}{gradients}
+\end{Verbatim}
+\end{tcolorbox}
+
+    The final \(\theta\) we got:
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{8}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{theta}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{8}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+array([[4.80833324],
+       [7.12658528]])
+\end{Verbatim}
+\end{tcolorbox}
+        
+    That's the same as what the Normal Equation found ! But the case would
+be different if we had used a different \emph{learning rate}.
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{download2.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+
+If its too low, then it'll take a lot of time to reach the optimal
+solution, whereas if its too high, the algorithm diverges and we won't
+even reach the solution. We can use \texttt{Scikit\ GridSearchCV} for
+finding the optimal hyperparameter.
+
+For the number of iterations : Best practice is to set a very large
+number of iterations, and to interrupt the algorithm, when the
+\textbf{gradient vector} becomes smaller than a certain
+\emph{tolerance}(\(\epsilon\)).
+
+    \hypertarget{stochastic-gradient-descent}{%
+\subsection{Stochastic Gradient
+Descent}\label{stochastic-gradient-descent}}
+
+``Stochastic'' means ``random''. \emph{Stochastic Gradient Descent}
+picks a random instance in the training set at every step and computes
+the gradients based only on that single instance. Obviously, working on
+a single instance at a time makes the algorithm much faster because it
+has very little data to manipulate at every iteration.
+
+    \begin{center}
+    \adjustimage{max size={0.6\linewidth}{0.9\paperheight}}{download3.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+
+Due to its randomness, \textbf{SGD} has a better chance of finding the
+global minima, than \emph{Batch Gradient Descent}. So, the randomness is
+good for escaping the local optima, but bad because it can never settle
+at the minima. One solution would be to gradually decrease the learning
+rate. The steps start out large, then it dies down and settles at the
+global minima. This process is also known as \textbf{\emph{simulated
+annealing}}. the function which determines the learning rate at each
+iteration is called the \textbf{\emph{learning schedule}}.
+
+Code implementation of \emph{SGD} :
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{9}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{n\PYZus{}epochs} \PY{o}{=} \PY{l+m+mi}{50}
+\PY{n}{t0}\PY{p}{,} \PY{n}{t1} \PY{o}{=} \PY{l+m+mi}{5}\PY{p}{,} \PY{l+m+mi}{50} \PY{c+c1}{\PYZsh{} Learning Schedule Hyperparameters}
+
+\PY{k}{def} \PY{n+nf}{learning\PYZus{}schedule}\PY{p}{(}\PY{n}{t}\PY{p}{)}\PY{p}{:}
+    \PY{k}{return} \PY{n}{t0} \PY{o}{/} \PY{p}{(}\PY{n}{t} \PY{o}{+} \PY{n}{t1}\PY{p}{)}
+
+\PY{n}{theta} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{randn}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)} \PY{c+c1}{\PYZsh{} random initialization}
+
+\PY{n}{fig} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{p}{)}
+\PY{n}{ax} \PY{o}{=} \PY{n}{fig}\PY{o}{.}\PY{n}{add\PYZus{}subplot}\PY{p}{(}\PY{l+m+mi}{111}\PY{p}{)}
+
+\PY{k}{for} \PY{n}{epoch} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{n\PYZus{}epochs}\PY{p}{)}\PY{p}{:}
+    \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{m}\PY{p}{)}\PY{p}{:}
+        \PY{n}{random\PYZus{}index} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{randint}\PY{p}{(}\PY{n}{m}\PY{p}{)}
+        \PY{n}{xi} \PY{o}{=} \PY{n}{X\PYZus{}b}\PY{p}{[}\PY{n}{random\PYZus{}index}\PY{p}{:}\PY{n}{random\PYZus{}index}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{]}
+        \PY{n}{yi} \PY{o}{=} \PY{n}{y}\PY{p}{[}\PY{n}{random\PYZus{}index}\PY{p}{:}\PY{n}{random\PYZus{}index}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{]}
+        \PY{n}{gradients} \PY{o}{=} \PY{l+m+mi}{2} \PY{o}{*} \PY{n}{xi}\PY{o}{.}\PY{n}{T}\PY{o}{.}\PY{n}{dot}\PY{p}{(}\PY{n}{xi}\PY{o}{.}\PY{n}{dot}\PY{p}{(}\PY{n}{theta}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{n}{yi}\PY{p}{)}
+        \PY{n}{eta} \PY{o}{=} \PY{n}{learning\PYZus{}schedule}\PY{p}{(}\PY{n}{epoch} \PY{o}{*} \PY{n}{m} \PY{o}{+} \PY{n}{i}\PY{p}{)}
+        \PY{n}{theta} \PY{o}{=} \PY{n}{theta} \PY{o}{\PYZhy{}} \PY{n}{eta} \PY{o}{*} \PY{n}{gradients}
+        
+    \PY{k}{if} \PY{n}{epoch} \PY{o}{\PYZlt{}} \PY{l+m+mi}{20} \PY{p}{:}
+        \PY{n}{X\PYZus{}new} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{]}\PY{p}{)}
+        \PY{n}{X\PYZus{}new\PYZus{}b} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{c\PYZus{}}\PY{p}{[}\PY{n}{np}\PY{o}{.}\PY{n}{ones}\PY{p}{(}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}\PY{p}{,} \PY{n}{X\PYZus{}new}\PY{p}{]}
+        \PY{n}{y\PYZus{}predict} \PY{o}{=} \PY{n}{X\PYZus{}new\PYZus{}b}\PY{o}{.}\PY{n}{dot}\PY{p}{(}\PY{n}{theta}\PY{p}{)}
+        \PY{k}{if} \PY{n}{epoch} \PY{o}{==} \PY{l+m+mi}{1}\PY{p}{:}
+            \PY{n}{ax}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{X\PYZus{}new}\PY{p}{,} \PY{n}{y\PYZus{}predict}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{b\PYZhy{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{linewidth} \PY{o}{=} \PY{l+m+mi}{1}\PY{p}{,} \PY{n}{label} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Learning Curve}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        \PY{k}{else} \PY{p}{:}
+            \PY{n}{ax}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{X\PYZus{}new}\PY{p}{,} \PY{n}{y\PYZus{}predict}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{b\PYZhy{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{linewidth} \PY{o}{=} \PY{l+m+mi}{1}\PY{p}{)}
+
+\PY{n}{ratio} \PY{o}{=} \PY{l+m+mf}{0.6}
+\PY{n}{xleft}\PY{p}{,} \PY{n}{xright} \PY{o}{=} \PY{n}{ax}\PY{o}{.}\PY{n}{get\PYZus{}xlim}\PY{p}{(}\PY{p}{)}
+\PY{n}{ybottom}\PY{p}{,} \PY{n}{ytop} \PY{o}{=} \PY{n}{ax}\PY{o}{.}\PY{n}{get\PYZus{}ylim}\PY{p}{(}\PY{p}{)}
+\PY{n}{ax}\PY{o}{.}\PY{n}{set\PYZus{}aspect}\PY{p}{(}\PY{n+nb}{abs}\PY{p}{(}\PY{p}{(}\PY{n}{xright}\PY{o}{\PYZhy{}}\PY{n}{xleft}\PY{p}{)}\PY{o}{/}\PY{p}{(}\PY{n}{ybottom}\PY{o}{\PYZhy{}}\PY{n}{ytop}\PY{p}{)}\PY{p}{)}\PY{o}{*}\PY{n}{ratio}\PY{p}{)}
+
+\PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{X}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{y}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{xlim}\PY{p}{(}\PY{l+m+mf}{0.00}\PY{p}{,}\PY{l+m+mf}{2.00}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{X}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{ro}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{markersize} \PY{o}{=} \PY{l+m+mi}{3}\PY{p}{,} \PY{n}{label} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Scattered Dataset}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{grid}\PY{p}{(}\PY{k+kc}{True}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{n}{loc}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{lower right}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{First 20 steps of SGD}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{center}
+    \adjustimage{max size={0.7\linewidth}{0.9\paperheight}}{output_22_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    By convention we iterate by rounds of \(m\) iterations; each round is
+called an \emph{epoch}. While the \emph{Batch Gradient Descent code}
+iterated \textbf{1000 times} through the whole training set, this code
+goes through the training set only \textbf{50 times} and reaches an
+acceptable solution :
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{10}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{theta}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{10}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+array([[4.81314772],
+       [7.16962854]])
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \hypertarget{mini-batch-gradient-descent}{%
+\subsection{Mini-batch Gradient
+Descent}\label{mini-batch-gradient-descent}}
+
+In this algorithm, at each step, instead of computing the gradients
+based on the full training set (as in \emph{Batch GD}) or based on just
+one instance (as in \emph{Stochastic GD}), \emph{Mini-batch GD} computes
+the gradients on small random sets of instances called
+\textbf{mini-batches}.
+
+The algorithm's progress in parameter space is less erratic than with
+\emph{Stochastic GD}, especially with fairly large mini-batches but both
+\emph{Stochastic GD and Mini-batch GD} will reach the minimum if you use
+a good learning schedule.
+
+    \hypertarget{polynomial-regression}{%
+\section{Polynomial Regression}\label{polynomial-regression}}
+
+We can actually use a linear model to fit non-linear data. A simple way
+to do this is to add powers of each feature as new features, then train
+a linear model on this extended set of features. This technique is
+called \textbf{\emph{Polynomial Regression}}.
+
+Let's generate some noise in some non-linear quadratic data :
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{11}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{m} \PY{o}{=} \PY{l+m+mi}{100}
+\PY{n}{X} \PY{o}{=} \PY{l+m+mi}{6} \PY{o}{*} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{rand}\PY{p}{(}\PY{n}{m}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{l+m+mi}{3}
+\PY{n}{y} \PY{o}{=} \PY{l+m+mf}{0.5} \PY{o}{*} \PY{n}{X}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2} \PY{o}{+} \PY{n}{X} \PY{o}{+} \PY{l+m+mi}{2} \PY{o}{+} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{randn}\PY{p}{(}\PY{n}{m}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    Now, we'll use \texttt{Scikit-Learn\ PolynomialFeatures} class to
+transform our training data :
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{12}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{preprocessing} \PY{k+kn}{import} \PY{n}{PolynomialFeatures}
+\PY{n}{poly\PYZus{}features} \PY{o}{=} \PY{n}{PolynomialFeatures}\PY{p}{(}\PY{n}{degree}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{,} \PY{n}{include\PYZus{}bias}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}
+\PY{n}{X\PYZus{}poly} \PY{o}{=} \PY{n}{poly\PYZus{}features}\PY{o}{.}\PY{n}{fit\PYZus{}transform}\PY{p}{(}\PY{n}{X}\PY{p}{)}
+\PY{n}{X\PYZus{}poly}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{12}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+array([2.86334939, 8.19876974])
+\end{Verbatim}
+\end{tcolorbox}
+        
+    Now let's fit a \textbf{\emph{Linear Regression}} model to this extended
+training data( we are using \texttt{Scikit-Learn\ LinearRegression} here
+:
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{13}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{linear\PYZus{}model} \PY{k+kn}{import} \PY{n}{LinearRegression}
+\PY{n}{lin\PYZus{}reg} \PY{o}{=} \PY{n}{LinearRegression}\PY{p}{(}\PY{p}{)}
+\PY{n}{lin\PYZus{}reg}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{X\PYZus{}poly}\PY{p}{,} \PY{n}{y}\PY{p}{)}
+\PY{n}{lin\PYZus{}reg}\PY{o}{.}\PY{n}{intercept\PYZus{}}\PY{p}{,} \PY{n}{lin\PYZus{}reg}\PY{o}{.}\PY{n}{coef\PYZus{}}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{13}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+(array([1.98031152]), array([[1.06214383, 0.53454417]]))
+\end{Verbatim}
+\end{tcolorbox}
+        
+    Let's plot and see what we get !
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{14}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{X\PYZus{}new} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mi}{3}\PY{p}{,}\PY{l+m+mf}{3.2}\PY{p}{,}\PY{l+m+mf}{0.1}\PY{p}{)}
+\PY{n}{X\PYZus{}new\PYZus{}b} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{c\PYZus{}}\PY{p}{[}\PY{n}{X\PYZus{}new}\PY{p}{,} \PY{n}{X\PYZus{}new}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{p}{]}
+\PY{n}{y\PYZus{}predict} \PY{o}{=}   \PY{n}{np}\PY{o}{.}\PY{n}{c\PYZus{}}\PY{p}{[}\PY{n}{np}\PY{o}{.}\PY{n}{ones}\PY{p}{(}\PY{p}{(}\PY{l+m+mi}{62}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}\PY{o}{.}\PY{n}{dot}\PY{p}{(}\PY{n}{lin\PYZus{}reg}\PY{o}{.}\PY{n}{intercept\PYZus{}}\PY{p}{)} \PY{o}{+} \PY{n}{X\PYZus{}new}\PY{o}{*}\PY{n}{lin\PYZus{}reg}\PY{o}{.}\PY{n}{coef\PYZus{}}\PY{p}{[}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{+} \PY{p}{(}\PY{n}{X\PYZus{}new}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{p}{)}\PY{o}{*}\PY{n}{lin\PYZus{}reg}\PY{o}{.}\PY{n}{coef\PYZus{}}\PY{p}{[}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{]}
+
+\PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{X}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{bo}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{markersize} \PY{o}{=} \PY{l+m+mi}{2}\PY{p}{,} \PY{n}{label} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Scattered Dataset}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{X\PYZus{}new}\PY{p}{,} \PY{n}{y\PYZus{}predict}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{r\PYZhy{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{label} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Predicted Curve}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Polynomial Regression}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{grid}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{True}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{xlim}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mi}{3}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{X}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{y}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{n}{loc}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{lower right}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{center}
+    \adjustimage{max size={0.8\linewidth}{0.9\paperheight}}{output_33_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \hypertarget{learning-curves}{%
+\section{Learning Curves}\label{learning-curves}}
+
+If you perform high-degree Polynomial Regression, you will likely fit
+the training data much better than with plain Linear Regression.
+
+But a very-high degree polynomial has chances of severely
+\emph{overfitting} the training data, while a linear model might have
+chances of \emph{underfitting} the same data. So we can use
+\textbf{cross-validation} to get an estimate of the model's performance.
+If a model performs well on the training data but generalizes poorly
+according to the cross-validation metrics, then the model is
+overfitting. If it performs poorly on both, then it is underfitting.
+
+Another way to tell it, is to look at the \emph{learning curves} : These
+are plots of the model's performance on the training set and the
+validation set as a function of the training set size. Let's generate
+the \emph{Learning Curves} here :
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{15}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{metrics} \PY{k+kn}{import} \PY{n}{mean\PYZus{}squared\PYZus{}error}
+\PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{model\PYZus{}selection} \PY{k+kn}{import} \PY{n}{train\PYZus{}test\PYZus{}split}
+
+\PY{c+c1}{\PYZsh{}\PYZsh{}A function that, given some training data, plots the learning curves of a model:}
+\PY{k}{def} \PY{n+nf}{plot\PYZus{}learning\PYZus{}curves}\PY{p}{(}\PY{n}{model}\PY{p}{,} \PY{n}{X}\PY{p}{,} \PY{n}{y}\PY{p}{)}\PY{p}{:}
+    \PY{n}{X\PYZus{}train}\PY{p}{,} \PY{n}{X\PYZus{}val}\PY{p}{,} \PY{n}{y\PYZus{}train}\PY{p}{,} \PY{n}{y\PYZus{}val} \PY{o}{=} \PY{n}{train\PYZus{}test\PYZus{}split}\PY{p}{(}\PY{n}{X}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{test\PYZus{}size}\PY{o}{=}\PY{l+m+mf}{0.2}\PY{p}{)}
+    \PY{n}{train\PYZus{}errors}\PY{p}{,} \PY{n}{val\PYZus{}errors} \PY{o}{=} \PY{p}{[}\PY{p}{]}\PY{p}{,} \PY{p}{[}\PY{p}{]}
+    \PY{k}{for} \PY{n}{m} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{n+nb}{len}\PY{p}{(}\PY{n}{X\PYZus{}train}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+        \PY{n}{model}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{X\PYZus{}train}\PY{p}{[}\PY{p}{:}\PY{n}{m}\PY{p}{]}\PY{p}{,} \PY{n}{y\PYZus{}train}\PY{p}{[}\PY{p}{:}\PY{n}{m}\PY{p}{]}\PY{p}{)}
+        \PY{n}{y\PYZus{}train\PYZus{}predict} \PY{o}{=} \PY{n}{model}\PY{o}{.}\PY{n}{predict}\PY{p}{(}\PY{n}{X\PYZus{}train}\PY{p}{[}\PY{p}{:}\PY{n}{m}\PY{p}{]}\PY{p}{)}
+        \PY{n}{y\PYZus{}val\PYZus{}predict} \PY{o}{=} \PY{n}{model}\PY{o}{.}\PY{n}{predict}\PY{p}{(}\PY{n}{X\PYZus{}val}\PY{p}{)}
+        \PY{n}{train\PYZus{}errors}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{mean\PYZus{}squared\PYZus{}error}\PY{p}{(}\PY{n}{y\PYZus{}train}\PY{p}{[}\PY{p}{:}\PY{n}{m}\PY{p}{]}\PY{p}{,}
+        \PY{n}{y\PYZus{}train\PYZus{}predict}\PY{p}{)}\PY{p}{)}
+        \PY{n}{val\PYZus{}errors}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{mean\PYZus{}squared\PYZus{}error}\PY{p}{(}\PY{n}{y\PYZus{}val}\PY{p}{,} \PY{n}{y\PYZus{}val\PYZus{}predict}\PY{p}{)}\PY{p}{)}
+    \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{sqrt}\PY{p}{(}\PY{n}{train\PYZus{}errors}\PY{p}{)}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{g\PYZhy{}+}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{linewidth}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{train}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+    \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{sqrt}\PY{p}{(}\PY{n}{val\PYZus{}errors}\PY{p}{)}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{r\PYZhy{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{linewidth}\PY{o}{=}\PY{l+m+mi}{3}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{val}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+    \PY{n}{plt}\PY{o}{.}\PY{n}{grid}\PY{p}{(}\PY{k+kc}{True}\PY{p}{)}
+    \PY{n}{plt}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{n}{loc} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{upper right}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+    \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Training Set Size}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+    \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{RMSE}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+    \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Learning Curves}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+    \PY{n}{plt}\PY{o}{.}\PY{n}{ylim}\PY{p}{(}\PY{l+m+mf}{0.00}\PY{p}{,}\PY{l+m+mf}{3.00}\PY{p}{)}
+    \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    For a plain \emph{Linear Regression} model :
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{16}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{lin\PYZus{}reg} \PY{o}{=} \PY{n}{LinearRegression}\PY{p}{(}\PY{p}{)}
+\PY{n}{plot\PYZus{}learning\PYZus{}curves}\PY{p}{(}\PY{n}{lin\PYZus{}reg}\PY{p}{,} \PY{n}{X}\PY{p}{,} \PY{n}{y}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{center}
+    \adjustimage{max size={0.7\linewidth}{0.9\paperheight}}{output_37_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    This is a typical example of underfitting. Both training and validation
+curves have reached a plateau, they are close and high. Let's plot the
+\emph{learning curve} for a 10th-degree polynomial :
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{17}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{}\PYZsh{}Create a pipeline for Scikit first :)}
+
+\PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{pipeline} \PY{k+kn}{import} \PY{n}{Pipeline}
+\PY{n}{polynomial\PYZus{}regression} \PY{o}{=} \PY{n}{Pipeline}\PY{p}{(}\PY{p}{[}
+                        \PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{poly\PYZus{}features}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{PolynomialFeatures}\PY{p}{(}\PY{n}{degree}\PY{o}{=}\PY{l+m+mi}{10}\PY{p}{,}
+                        \PY{n}{include\PYZus{}bias}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}\PY{p}{)}\PY{p}{,}
+                        \PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{lin\PYZus{}reg}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{LinearRegression}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{,}
+                        \PY{p}{]}\PY{p}{)}
+
+\PY{n}{plot\PYZus{}learning\PYZus{}curves}\PY{p}{(}\PY{n}{polynomial\PYZus{}regression}\PY{p}{,} \PY{n}{X}\PY{p}{,} \PY{n}{y}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{center}
+    \adjustimage{max size={0.7\linewidth}{0.9\paperheight}}{output_39_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    Differences :
+
+\begin{itemize}
+\item
+  The error on the training data is much lower than with the Linear
+  Regression model.
+\item
+  There's a gap between the curves, which indicates that this model is
+  the heavily overfitting :(
+\end{itemize}
+
+\textbf{\emph{Note}} : Its good to notice that, as the train set size
+increases the model performs much better, just like any other
+overfitting scenario.
+
+    \hypertarget{regularized-linear-models}{%
+\section{Regularized Linear Models}\label{regularized-linear-models}}
+
+The fewer degrees of freedom a model has, the harder it will be for it
+to overfit the data. A simple way to regularize a polynomial model is to
+reduce the number of polynomial degrees.
+
+For a linear model, \emph{regularization} is typically achieved by
+constraining the weights of the model. We will now look at \textbf{Ridge
+Regression, Lasso Regression, and Elastic Net}, which implement three
+different ways to constrain the weights.
+
+    \hypertarget{ridge-regression}{%
+\subsection{Ridge Regression}\label{ridge-regression}}
+
+Ridge Regression cost function :
+
+\[J \big( \theta \big) = \mathbf{MSE}\big( \theta \big) + \alpha\frac{1}{2}\sum_{i=1}^{n} \theta_{i}^{2}\]
+
+Here :
+
+\begin{itemize}
+\item
+  \(\alpha\frac{1}{2}\sum_{i=1}^{n} \theta_{i}^{2}\) is the
+  regularization term. This forces the learning algorithm to not only
+  fit the data but also keep the model weights as small as possible. We
+  apply the regularization term only during the model training. Once the
+  model is trained, we use the unregularized performance.
+\item
+  The hyperparameter \(\alpha\) controls how much we want to regularize the
+  model. If \(\alpha = 0\), then \emph{Ridge Regression} is just
+  \emph{Linear Regression}. If \(\alpha\) is very large, then all
+  weights end up very close to zero and the result is a flat line going
+  through the mean.
+\end{itemize}
+
+Ridge Regression closed-form solution :
+\[\hat\theta = \big( \mathbf{X^{\intercal} X} + \alpha\mathbf{A} \big)^{-1}\mathbf{X^{\intercal}y}\]
+
+We can perform \emph{Ridge Regression} either by computing a closed-form
+equation or by performing \emph{Gradient Descent}. The pros and cons are
+the same.
+
+    \hypertarget{lasso-regression}{%
+\subsection{Lasso Regression}\label{lasso-regression}}
+
+Least Absolute Shrinkage and Selection Operator Regression (usually
+simply called Lasso Regression) is another regularized version of Linear
+Regression. But it uses the norm of the weight vector instead of half
+the square of the norm as the regularization term.
+
+Lasso Regression cost function :
+\[J \big( \theta \big) = \mathbf{MSE}\big( \theta \big) + \alpha\sum_{i=1}^{n} |\theta_{i}|\]
+
+An important characteristic of \emph{Lasso Regression} is that it tends
+to eliminate the weights of the least important features. \emph{Lasso
+Regression} automatically performs feature selection and outputs a
+\emph{sparse model}.
+
+Comparison of \textbf{Lasso and Ridge models} :
+
+    \begin{center}
+    \adjustimage{max size={0.8\linewidth}{0.9\paperheight}}{download5.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.8\linewidth}{0.9\paperheight}}{download4.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+
+The axes represent two model parameters, and the background contours
+represent different loss functions. The small white circles show the
+path that Gradient Descent takes to optimize some model parameters that
+were initialized.
+
+    \hypertarget{elastic-net}{%
+\subsection{Elastic Net}\label{elastic-net}}
+
+\textbf{Elastic Net} is a middle ground between \emph{Ridge Regression}
+and \emph{Lasso Regression}. The regularization term is a simple mix of
+both \emph{Ridge} and \emph{Lasso's regularization terms}, and you can
+control the mix ratio \emph{r}. When \emph{r = 0}, \emph{Elastic Net} is
+equivalent to \emph{Ridge Regression}, and when \emph{r = 1}, it is
+equivalent to \emph{Lasso Regression}.
+
+Elastic Net cost function :
+
+\[J \big( \theta \big) = \mathbf{MSE}\big( \theta \big) + r\alpha\sum_{i=1}^{n} |\theta_{i}| + \frac{1-r}{2}\alpha\sum_{i=1}^{n}\theta_{i}^{2}\]
+
+    \hypertarget{early-stopping}{%
+\subsection{Early Stopping}\label{early-stopping}}
+
+A very different way to regularize iterative learning algorithms such as
+Gradient Descent is to stop training as soon as the validation error
+reaches a minimum. This is called \textbf{early stopping}.
+
+As the algorithm learns, the prediction error(RMSE) on the training set
+goes down, along with its prediction error on the validation set. After
+a number of \emph{epochs} the \textbf{validation error stops decreasing
+and starts to go back up}. This is an indication of premature
+overfitting. We need to stop right here.
+
+It functions as a simple and efficient regularization technique. We just
+need to find the minima of the \emph{validation error} :)
+
+Basic implementation of early stopping :
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{ }{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{base} \PY{k+kn}{import} \PY{n}{clone}
+\PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{preprocessing} \PY{k+kn}{import} \PY{n}{StandardScaler}
+\PY{c+c1}{\PYZsh{} prepare the data}
+\PY{n}{poly\PYZus{}scaler} \PY{o}{=} \PY{n}{Pipeline}\PY{p}{(}\PY{p}{[}
+                        \PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{poly\PYZus{}features}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{PolynomialFeatures}\PY{p}{(}\PY{n}{degree}\PY{o}{=}\PY{l+m+mi}{90}\PY{p}{,}
+                                                    \PY{n}{include\PYZus{}bias}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}\PY{p}{)}\PY{p}{,}
+                        \PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{std\PYZus{}scaler}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{StandardScaler}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+                        \PY{p}{]}\PY{p}{)}
+
+\PY{n}{X\PYZus{}train\PYZus{}poly\PYZus{}scaled} \PY{o}{=} \PY{n}{poly\PYZus{}scaler}\PY{o}{.}\PY{n}{fit\PYZus{}transform}\PY{p}{(}\PY{n}{X\PYZus{}train}\PY{p}{)}
+\PY{n}{X\PYZus{}val\PYZus{}poly\PYZus{}scaled} \PY{o}{=} \PY{n}{poly\PYZus{}scaler}\PY{o}{.}\PY{n}{transform}\PY{p}{(}\PY{n}{X\PYZus{}val}\PY{p}{)}
+
+\PY{n}{sgd\PYZus{}reg} \PY{o}{=} \PY{n}{SGDRegressor}\PY{p}{(}\PY{n}{max\PYZus{}iter}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{tol}\PY{o}{=}\PY{o}{\PYZhy{}}\PY{n}{np}\PY{o}{.}\PY{n}{infty}\PY{p}{,} \PY{n}{warm\PYZus{}start}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,}
+                    \PY{n}{penalty}\PY{o}{=}\PY{k+kc}{None}\PY{p}{,} \PY{n}{learning\PYZus{}rate}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{constant}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{eta0}\PY{o}{=}\PY{l+m+mf}{0.0005}\PY{p}{)}
+
+\PY{n}{minimum\PYZus{}val\PYZus{}error} \PY{o}{=} \PY{n+nb}{float}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{inf}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n}{best\PYZus{}epoch} \PY{o}{=} \PY{k+kc}{None}
+\PY{n}{best\PYZus{}model} \PY{o}{=} \PY{k+kc}{None}
+
+\PY{k}{for} \PY{n}{epoch} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{1000}\PY{p}{)}\PY{p}{:}
+    \PY{n}{sgd\PYZus{}reg}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{X\PYZus{}train\PYZus{}poly\PYZus{}scaled}\PY{p}{,} \PY{n}{y\PYZus{}train}\PY{p}{)} \PY{c+c1}{\PYZsh{} continues where it left off}
+    \PY{n}{y\PYZus{}val\PYZus{}predict} \PY{o}{=} \PY{n}{sgd\PYZus{}reg}\PY{o}{.}\PY{n}{predict}\PY{p}{(}\PY{n}{X\PYZus{}val\PYZus{}poly\PYZus{}scaled}\PY{p}{)}
+    \PY{n}{val\PYZus{}error} \PY{o}{=} \PY{n}{mean\PYZus{}squared\PYZus{}error}\PY{p}{(}\PY{n}{y\PYZus{}val}\PY{p}{,} \PY{n}{y\PYZus{}val\PYZus{}predict}\PY{p}{)}
+    
+    \PY{k}{if} \PY{n}{val\PYZus{}error} \PY{o}{\PYZlt{}} \PY{n}{minimum\PYZus{}val\PYZus{}error}\PY{p}{:}
+        \PY{n}{minimum\PYZus{}val\PYZus{}error} \PY{o}{=} \PY{n}{val\PYZus{}error}
+        \PY{n}{best\PYZus{}epoch} \PY{o}{=} \PY{n}{epoch}
+        \PY{n}{best\PYZus{}model} \PY{o}{=} \PY{n}{clone}\PY{p}{(}\PY{n}{sgd\PYZus{}reg}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    With \texttt{warm\_start=True}, when the \texttt{fit()} method is called
+it continues training where it left off, instead of restarting from
+scratch.
+
+    \hypertarget{logistic-regression}{%
+\section{Logistic Regression}\label{logistic-regression}}
+
+\emph{Logistic Regression} is commonly used to estimate the probability
+that an instance belongs to a particular class. Therefore, it is a
+binary classifier.
+
+Just like a Linear Regression model, a \emph{Logistic Regression} model,
+computes a weighted sum of the input features and it outputs the
+\emph{logistic} of this result.
+
+Logistic Regression model \textbf{estimated probability} :
+
+\[\hat{p} = h_{\theta}(\mathbf{x}) = \sigma \big( \mathbf{x^{\intercal}}\theta \big)\]
+
+\(\sigma\) is the \emph{sigmoid function}. It takes the
+\(\mathbf{x^{\intercal}}\theta\) and squeezes its value to a number
+between 0 and 1.
+
+Notice that \(\sigma(t) < 0.5\) when \(t < 0\), and \(\sigma(t) \geq 0.5\)
+when \(t \geq 0\), so a \emph{Logistic Regression} model predicts \(1\) if
+\(\mathbf{x^{\intercal}}\theta\) is positive and 0 if it is negative.
+
+\hypertarget{training-and-cost-function}{%
+\subsection{Training and Cost
+Function}\label{training-and-cost-function}}
+
+The objective of training is to set the parameter vector \(\theta\) so
+that the model estimates high probabilities for positive instances (y =
+1) and low probabilities for negative instances (y = 0).
+
+Such a cost function which implements this concept for a single training
+instance :
+
+\[c(\theta) = \begin{cases} \mathbf{-log}(\hat{p}) & \text{if y = 1}\\ \mathbf{-log}(1-\hat{p}) & \text{if y = 0}\\ \end{cases}\]
+
+The cost function over the whole training set is the average cost over
+all training instances :
+
+\[J(\theta) = -\frac{1}{m}\sum_{i=1}^{m} \Big[ y^{(i)}log(\hat{p}^{(i)}) + (1 - y^{(i)})log(1-\hat{p}^{(i)})\Big]\]
+
+This is known as, \emph{Logistic Regression cost function(log loss)}.
+
+Well, here we doon't have a generalised Normal Equation, but we can
+easily check that the cost function(log loss) is actually convex, so we
+can apply our second option, the \textbf{Gradient Descent}.
+
+The partial derivatives of the cost function with respect to the
+\(j^{th}\) model parameter is :
+
+\[\frac{\partial}{\partial \theta_{j}}\mathbf{J(}\theta) = \frac{1}{m} \sum_{i=1}^{m}\Big(\sigma(\theta^{\intercal}\mathbf{x^{(i)}}) - y^{(i)}\Big)x_{j}^{(i)}\]
+
+That's it, we can now apply \emph{Batch, Stochastic or Mini-Batch
+Gradient Descent} to use this \emph{Logistic Regression model} :)
+
+    \hypertarget{conclusion}{%
+\section{Conclusion}\label{conclusion}}
+
+We saw the working of quite a few, Machine Learning \textbf{Regressors}
+and \textbf{Classifiers}. We will now move on to more interesting stuff
+\(:)\)
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+\end{document}
