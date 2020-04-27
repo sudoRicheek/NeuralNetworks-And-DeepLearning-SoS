@@ -13,6 +13,10 @@ This is a reading project, that I have taken up in my summer break of 2020 as a 
 
 2. **[Working of Basic Machine Learning Algorithms](https://github.com/sudoRicheek/NeuralNetworks-And-DeepLearning-SoS/blob/master/Working%20of%20Basic%20Machine%20Learning%20Algorithms.pdf)**
 
+3. **[Summary Of A Paper Exploring DeConvolutional Networks](https://github.com/sudoRicheek/Gestures-For-3D-Space/blob/master/Notes%20And%20Basic%20Implementations/DeConvolutional%20Networks%20Summary.pdf)**
+  
+    Here, you can find the summarized version of this [paper](https://www.google.com/url?sa=t&source=web&rct=j&url=https://cs.nyu.edu/~fergus/papers/zeilerECCV2014.pdf&ved=2ahUKEwjcsrbOzPToAhVt7nMBHV9GAlYQFjAQegQIBxAB&usg=AOvVaw3ga-MmEmZLvVUSuQhiPog8&cshid=1587303221548), by **Matthew D. Zeiler and Rob Fergus from the Dept. of Computer Science, New York University, USA** which mainly explores the novel way of **Visualizing and Understanding Convolutional Networks** through *DeConvNets*.
+
 ## Author
 
 Learning with :heart: Richeek Das. April 2020
