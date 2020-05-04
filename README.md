@@ -17,6 +17,9 @@ This is a reading project, that I have taken up in my summer break of 2020 as a 
   
     Here, you can find the summarized version of this [paper](https://www.google.com/url?sa=t&source=web&rct=j&url=https://cs.nyu.edu/~fergus/papers/zeilerECCV2014.pdf&ved=2ahUKEwjcsrbOzPToAhVt7nMBHV9GAlYQFjAQegQIBxAB&usg=AOvVaw3ga-MmEmZLvVUSuQhiPog8&cshid=1587303221548), by **Matthew D. Zeiler and Rob Fergus from the Dept. of Computer Science, New York University, USA** which mainly explores the novel way of **Visualizing and Understanding Convolutional Networks** through *DeConvNets*.
 
+4. **[Gesture Detection CNN Models Using Transfer Learning](https://github.com/sudoRicheek/Gestures-CNN-Model-Creation-And-FineTuning)**
+
+    The above, repo hosts some of the notebooks and stuff that I had created while making the **CNN** Transfer Learning models for this project.
 ## Author
 
 Learning with :heart: Richeek Das. April 2020
