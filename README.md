@@ -5,7 +5,11 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 This is a reading project, that I have taken up in my summer break of 2020 as a part of the **Summer Of Science IIT Bombay**. Every progress related to the project will be hosted here. The intial order of upload will be haphazard.
 
-</br></br></br></br>
+</br>
+
+:heart: **SEE THE FINAL REPORT [HERE](https://github.com/sudoRicheek/NeuralNetworks-And-DeepLearning-SoS/blob/master/Neural%20Networks%20and%20Deep%20Learning%20Final%20Report.pdf)**
+
+</br></br>
 
 ## Contents
 
@@ -20,6 +24,10 @@ This is a reading project, that I have taken up in my summer break of 2020 as a 
 4. **[Gesture Detection CNN Models Using Transfer Learning](https://github.com/sudoRicheek/Gestures-CNN-Model-Creation-And-FineTuning)**
 
     The above, repo hosts some of the notebooks and stuff that I had created while making the **CNN** Transfer Learning models for this project.
+
+5. **[FINAL REPORT](https://github.com/sudoRicheek/NeuralNetworks-And-DeepLearning-SoS/blob/master/Neural%20Networks%20and%20Deep%20Learning%20Final%20Report.pdf)**
+
+    This is the Final Report PDF for this **Reading Project**.
 ## Author
 
 Learning with :heart: Richeek Das. April 2020
